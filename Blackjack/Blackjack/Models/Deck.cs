@@ -9,10 +9,12 @@ namespace Blackjack.Models
     public class Deck
     {
         private readonly IList<Card> deck;
-        
+        private readonly Random random;
+
         public Deck()
         {
             this.deck = new List<Card>();
+            this.random = new Random();
 
             BuildDeck();
         }
@@ -33,11 +35,6 @@ namespace Blackjack.Models
             }
         }
 
-        public bool CanDeal
-        {
-            get { return this.deck.Any(); }
-        }
-
         public Card DrawCard()
         {
             if(!this.deck.Any())
@@ -45,7 +42,7 @@ namespace Blackjack.Models
                 return null;
             }
             
-            int randomIndex = new Random().Next(this.deck.Count - 1);
+            int randomIndex = this.random.Next(this.deck.Count - 1);
 
             var card = this.deck[randomIndex];
             this.deck.RemoveAt(randomIndex);
