@@ -1,0 +1,14 @@
+﻿@model TestMvc.Models.Thing
+
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+
+<div class="editor-field">
+    @Html.EditorFor(model => model.Body)
+    @Html.ValidationMessageFor(model => model.Body)
+</div>
+
+@Html.HiddenFor(m => m.IsEdited)
+
