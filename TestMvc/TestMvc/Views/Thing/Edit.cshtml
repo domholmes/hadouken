@@ -1,8 +1,6 @@
 ﻿
 <h2>Edit</h2>
 
-@Html.ValidationSummary()
-
 <form id="thingForm">
 
     <div id="thing"></div>
@@ -11,12 +9,12 @@
     <input type="button" id="revert" value="Revert"/>
 
 </form>
-<div id="status"></div>
-
 
 
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
+
     <script type="text/javascript" src="@Url.Content("/Scripts/Thing/Thing.js")"></script>
 
     <script type="text/javascript">

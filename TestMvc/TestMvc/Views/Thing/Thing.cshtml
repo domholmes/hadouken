@@ -1,14 +1,29 @@
-﻿@model TestMvc.Models.Thing
+﻿@model TestMvc.Models.ThingViewModel
 
+@Html.ValidationSummary(true)
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Name)
     @Html.ValidationMessageFor(model => model.Name)
 </div>
 
+<div class="editor-label">
+    @Html.LabelFor(model => model.Body)
+</div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Body)
     @Html.ValidationMessageFor(model => model.Body)
 </div>
+
+<p>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+</p>
+
 
 @Html.HiddenFor(m => m.IsEdited)
 

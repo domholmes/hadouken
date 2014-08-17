@@ -18,7 +18,7 @@ namespace TestMvc.Controllers
 
         public PartialViewResult GetThing(string id)
         {
-            var thing = new Thing()
+            var thing = new ThingViewModel()
             {
                 Name = id,
                 Body = "blah",
@@ -30,13 +30,19 @@ namespace TestMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveThing(Thing thing)
+        public PartialViewResult SaveThing(ThingViewModel thing)
         {
-            var valid = ModelState.IsValid;
+            if(ModelState.IsValid)
+            {
+                // do save
+                thing.Status = "Save ok";
+            }
+            else
+            {
+                thing.Status = "";
+            }
 
-            ModelState.AddModelError("stuff", "Stuff is wrong!");
-
-            return new JsonResult();
+            return PartialView("Thing", thing);
         }
     }
 }

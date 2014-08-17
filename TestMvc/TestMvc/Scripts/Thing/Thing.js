@@ -12,27 +12,32 @@ var getThing = function () {
 
     $.get('/Thing/GetThing/' + thingId, function (data) {
 
-        $('#thing').html(data);
-        
-        $('#thingForm').removeData("validator");
-        $('#thingForm').removeData("unobtrusiveValidation");
-        $.validator.unobtrusive.parse('#thingForm');
-
-        var isEdited = $('#IsEdited').val();
-
-        if (isEdited === 'True') {
-            $('#revert').show();
-        }
-        else {
-            $('#revert').hide();
-        }
+        updateThing(data);
     });
 };
 
 var saveThing = function () {
 
-    $.post("/Thing/SaveThing", $('#thingForm').serialize()).done(function(){
+    $.post("/Thing/SaveThing", $('#thingForm').serialize()).done(function (data) {
     
-        $('#status').text('Thing saved');
+        updateThing(data);
     });
+};
+
+var updateThing = function (data) {
+
+    $('#thing').html(data);
+
+    $('#thingForm').removeData("validator");
+    $('#thingForm').removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse('#thingForm');
+
+    var isEdited = $('#IsEdited').val();
+
+    if (isEdited === 'True') {
+        $('#revert').show();
+    }
+    else {
+        $('#revert').hide();
+    }
 };
