@@ -3,12 +3,12 @@
     var p1Stats = {
 
         name: "Crusader",
-        level: 70,
         attacksPerSecond: 1.23,
         critChancePercent: 13.5,
         critHitDamagePercent: 102,
         damageReductionPercent: 79.7,
-        resistancePercent: 73,
+        physicalResistancePercent: 73,
+        meleeDamageReductionPercent: 0,
         maxLife: 659975,
         lifePerSecond: 1291,
         lifeOnHit: 5080,
@@ -28,18 +28,18 @@
     var p2Stats = {
 
         name: "Fallen Overseer",
-        level: 70,
-        attacksPerSecond: 0.75,
+        attacksPerSecond: 1.2,
         critChancePercent: 13.5,
         critHitDamagePercent: 102,
         damageReductionPercent: 79.7,
-        resistancePercent: 73,
+        physicalResistancePercent: 73,
+        meleeDamageReductionPercent: 0,
         maxLife: 500000,
         lifePerSecond: 0,
         lifeOnHit: 0,
         maxMeter: 0,
         primaryAttack: {
-            damage: 458000,
+            damage: 1800000,
             meterCost: 0,
             meterOnHit: 0
         },

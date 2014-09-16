@@ -31,7 +31,7 @@
         }
 
         self.p1.attack();
-        //self.p2.attack();
+        self.p2.attack();
         self.p1.heal(self.intervalLength);
     }
 }

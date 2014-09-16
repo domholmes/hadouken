@@ -12,7 +12,7 @@
 
     this.attack = function(){
 
-        self = this;
+        var self = this;
 
         self.isAttacking = true;
 

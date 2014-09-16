@@ -26,12 +26,10 @@
 
             if (this.secondaryAttack.canAttack()) {
 
-                this.status = "Attacking with secondary";
                 this.secondaryAttack.attack();
             }
             else if(this.primaryAttack.canAttack()){
 
-                this.status = "Attacking with primary";
                 this.primaryAttack.attack();
             }
         }
@@ -41,11 +39,7 @@
 
         if (this.isAlive()) {
 
-            var mitigated = this.mitigationPercent * damage;
-            var finalDamage = damage - mitigated;
-
-            this.status = "Taking " + finalDamage + " damage (" + mitigated + "mitigated)";
-            this.life -= finalDamage;
+            this.life -= damage * this.mitigationPercent;
         }
 
         if (!this.isAlive()) {
