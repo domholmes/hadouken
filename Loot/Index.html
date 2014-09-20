@@ -1,0 +1,44 @@
+﻿
+<!doctype html>
+
+<html ng-app="app">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Diablo 3 Damage Model</title>
+        <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+
+    <body ng-controller="MainController">
+
+        <div class="container">
+            <small>{{ battle.status }}<br/></small>
+            <br/>
+            <small><em>{{p1Name}}</em></small>
+            <progressbar max="p1MaxLife" value="p1Life" type="danger" animate="false"><span white-space:nowrap;">Life: {{p1Life | number:0}}</span></progressbar>
+            <progressbar max="p1MaxMeter" value="p1Meter" type="info" animate="false">Wrath</progressbar>
+            <small>{{ p1Status }}</small><br />
+            <br/>
+            <small><em>{{p2Name}}</em></small>
+            <progressbar max="p2MaxLife" value="p2Life" type="danger" animate="false"><span white-space:nowrap;">Life: {{p2Life | number:0}}</span></progressbar>
+            <progressbar max="p2MaxMeter" value="p2Meter" type="info" animate="false">Wrath</progressbar>
+            <small>{{ p2Status }}</small><br />
+        
+            <footer>
+                <p><small>&copy; 2014 - Dom Holmes</small></p>
+            </footer>
+        </div>
+    </body>
+
+</html>
+
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+<script src="/app/model/healer.js"></script>
+<script src="/app/model/mitigator.js"></script>
+<script src="/app/model/attack.js"></script>
+<script src="/app/model/player.js"></script>
+<script src="/app/model/battle.js"></script>
+<script src="/app/viewmodels/lootViewModel.js"></script>
+<script src="/app/controllers/mainController.js"></script>
