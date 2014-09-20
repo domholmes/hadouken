@@ -32,12 +32,13 @@ var updateThing = function (data) {
     $('#thingForm').removeData("unobtrusiveValidation");
     $.validator.unobtrusive.parse('#thingForm');
 
-    var isEdited = $('#IsEdited').val();
 
-    if (isEdited === 'True') {
+    if ($('#IsEdited').val() === 'True') {
+
         $('#revert').show();
     }
     else {
+
         $('#revert').hide();
     }
 };

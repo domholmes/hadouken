@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack.Models
 {
-    public class CpuPlayer : Player
+    public abstract class Player
     {
     }
 }

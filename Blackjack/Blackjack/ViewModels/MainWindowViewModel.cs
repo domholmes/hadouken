@@ -10,15 +10,18 @@ namespace BlackJack.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private const int MaxHand = 5;
-        private int? playerScore;
-        private int? cpusScore;
+        private const int MAX_HAND = 5;
+        private int? player1Score;
+        private int? player2Score;
         private Deck deck;
         private readonly Scorer scorer;
-        private readonly CpuPlayer cpuPlayer;
         private bool firstGameStarted;
         private bool playerHasStuck;
         private bool cpuHasFinished;
+
+        private Player player1;
+        private Player player2;
+        private Player currentPlayer;
 
         public ICommand NewGameCommand { get { return new DelegateCommand(OnNewGame); } }
         public ICommand TwistCommand { get { return new DelegateCommand(OnTwist, () => PlayerCanTwist); } }
@@ -26,12 +29,12 @@ namespace BlackJack.ViewModels
 
         public int? PlayersScore
         {
-            get { return playerScore; }
+            get { return player1Score; }
             private set
             {
-                if (playerScore != value)
+                if (player1Score != value)
                 {
-                    playerScore = value;
+                    player1Score = value;
                     RaisePropertyChanged(() => PlayersScore);
                 }
             }
@@ -39,12 +42,12 @@ namespace BlackJack.ViewModels
 
         public int? CpusScore
         {
-            get { return cpusScore; }
+            get { return player2Score; }
             private set
             {
-                if (cpusScore != value)
+                if (player2Score != value)
                 {
-                    cpusScore = value;
+                    player2Score = value;
                     RaisePropertyChanged(() => CpusScore);
                 }
             }
@@ -57,17 +60,17 @@ namespace BlackJack.ViewModels
                 return !firstGameStarted ? "Welcome" : 
                     (PlayerIsBust ? "Bust!" : 
                     playerHasStuck ?
-                    cpuHasFinished ? (this.cpusScore == null || this.playerScore >= this.cpusScore ? "You won!" : "You lost") : "You have stuck on " + PlayersScore : "Your turn"); 
+                    cpuHasFinished ? (this.player2Score == null || this.player1Score >= this.player2Score ? "You won!" : "You lost") : "You have stuck on " + PlayersScore : "Your turn"); 
             }
         }
 
-        public ObservableCollection<Card> PlayersHand
+        public ObservableCollection<Card> p1Hand
         { 
             get; 
             private set; 
         }
 
-        public ObservableCollection<Card> CpusHand
+        public ObservableCollection<Card> p2Hand
         {
             get;
             private set;
@@ -75,7 +78,7 @@ namespace BlackJack.ViewModels
 
         private bool PlayerCanTwist
         {
-            get { return !PlayerIsBust && !playerHasStuck; }
+            get { return IsHumansTurn && !PlayerIsBust && !playerHasStuck; }
         }
 
         private bool PlayerCanStick
@@ -90,34 +93,43 @@ namespace BlackJack.ViewModels
 
         private bool PlayerHasMaxHand
         {
-            get { return this.PlayersHand.Count >= 5; }
+            get { return this.p1Hand.Count >= 5; }
         }
 
         private bool CpuIsBust
         {
             get { return !this.CpusScore.HasValue; }
         }
+        
+        private bool IsHumansTurn
+        {
+            get { return this.currentPlayer is HumanPlayer; }
+        }
 
         public MainWindowViewModel()
         {
             this.scorer = new Scorer();
-            this.cpuPlayer = new CpuPlayer();
-            this.PlayersHand = new ObservableCollection<Card>();
-            this.CpusHand = new ObservableCollection<Card>();
+            this.p1Hand = new ObservableCollection<Card>();
+            this.p2Hand = new ObservableCollection<Card>();
         }
 
         private void OnNewGame()
         {
             this.firstGameStarted = true;
             
-            this.playerHasStuck = false;
-            this.PlayersScore = 0;
-            this.PlayersHand.Clear();
+            //this.playerHasStuck = false;
+            //this.PlayersScore = 0;
+            //this.PlayersHand.Clear();
 
-            this.CpusScore = 0;
-            this.CpusHand.Clear();
+            //this.CpusScore = 0;
+            //this.CpusHand.Clear();
             
             this.deck = new Deck();
+
+            this.player1 = new HumanPlayer();
+            this.player2 = new CpuPlayer();
+
+            this.currentPlayer = this.player1;
 
             OnTwist();
             OnTwist();
@@ -125,9 +137,9 @@ namespace BlackJack.ViewModels
 
         private void OnTwist()
         {
-            PlayersHand.Add(this.deck.DrawCard());
+            p1Hand.Add(this.deck.DrawCard());
 
-            this.PlayersScore = this.scorer.Score(PlayersHand);
+            this.PlayersScore = this.scorer.Score(p1Hand);
 
             RaisePropertyChanged(() => GameStatus);
 
@@ -152,14 +164,14 @@ namespace BlackJack.ViewModels
 
         private void CpuPlay()
         {
-            CpusHand.Add(this.deck.DrawCard());
-            CpusHand.Add(this.deck.DrawCard());
-            this.CpusScore = this.scorer.Score(CpusHand);
+            p2Hand.Add(this.deck.DrawCard());
+            p2Hand.Add(this.deck.DrawCard());
+            this.CpusScore = this.scorer.Score(p2Hand);
 
-            while(!CpuIsBust && this.cpusScore <= this.playerScore)
+            while(!CpuIsBust && this.player2Score <= this.player1Score)
             {
-                CpusHand.Add(this.deck.DrawCard());
-                this.CpusScore = this.scorer.Score(CpusHand);
+                p2Hand.Add(this.deck.DrawCard());
+                this.CpusScore = this.scorer.Score(p2Hand);
             }
         }
     }

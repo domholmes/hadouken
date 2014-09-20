@@ -57,6 +57,8 @@
     <Compile Include="Models\CpuPlayer.cs" />
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Faces.cs" />
+    <Compile Include="Models\HumanPlayer.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Suits.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
